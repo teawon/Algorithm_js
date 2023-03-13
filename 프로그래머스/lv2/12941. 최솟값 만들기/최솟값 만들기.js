@@ -28,4 +28,6 @@ function solution(A,B){
 /**
 *  - 배열에서 최대값 / 최소값을 뽑는 함수는? (Math.max(...arr)) // Math.min(...arr))
 *  - 배열의 특정 값을 제거하려면 어떻게 해야하는가? (shift / splice)
+*  - 왜 정렬시 sort()값을 넣어야 하는가?
+*  - reduce를 활용해서 다시 풀어보기
 */
