@@ -1,38 +1,35 @@
 function solution(progresses, speeds) {
-    var answer = [];
-
-    let i=0;
-    let day=0;
-    let count=0;
-    while(true){
-        // 먼저 배포되어야 하는 작업까지 걸리는 시간 계산
-        day+=Math.ceil((100-progresses[i]-speeds[i]*day)/speeds[i]); 
-        console.log(day);
-        count = 0;
-        
-        // 특정 작업이 완료되었을때 동시에 배포될 수 있는 작업 수 계산
-        while(true){
-            if(i<speeds.length && (progresses[i]+speeds[i]*day)>=100){
-                i++;
-                count++;
-             }
-            else{
-                break;
-            }
-         }
-        
-    answer.push(count);
-
-    if(i >= speeds.length){
-         break;
-       }
+    var answer = [1];
+    
+    const calDay = (status , speed) => {
+        return Math.ceil((100-status) / speed)
     }
+    
+    const size = speeds.length;
+    
+    let resultCount = 0;
+    let preCompleteDay = calDay(progresses[0],speeds[0]);
+    
+    for(let i=1; i<size; i++){
+        day = calDay(progresses[i],speeds[i]);
+        
+        if(preCompleteDay >= day){
+            answer[resultCount] ++;
+        }
+        else{
+            preCompleteDay = day;
+            answer[++resultCount] = 1;
+        }
+        
+    }
+   
 
     return answer;
 }
 
 /*
-   1차 코드 (실수한점)
-   -> 문제를 구현하듯 차례대로 풀이하였고 그 과정에서 while문을 사용
-   -> 코드 가독성이 떨어지고 Index증가 범위를 찾기 어려움. 체크도 불필요하게 두 번 발생했다.
+  // 개선코드 )
+  // - 각 진도마다 걸리는 날짜를 계산 후, 이전값보다 큰지 작은지 확인하며 카운팅을 수행한다.
+  // - 값을 계산후 배열에 더하는 방식이 아니라, 특정 인덱스값을 하나씩 증가시키면 마지막 인덱스에대한 예외처리를 하지않아도 된다
+    (처음에는 계산후 배열에 더했는데 그럼 마지막배열에서 빠져나왔을때 복잡한 예외처리가 필요했었음)
 */
